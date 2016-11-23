@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="QqA-gj-hb5" customClass="TokenCollectionViewCell" customModule="AnotherCollectionViewTest" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="250" height="40"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="250" height="40"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bBz-L5-zaC">
+                        <rect key="frame" x="0.0" y="0.0" width="250" height="40"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UH2-Qt-Wqc" customClass="FileExtensionView" customModule="AnotherCollectionViewTest" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="1Ni-n0-99A"/>
+                                    <constraint firstAttribute="height" constant="40" id="hhJ-LB-HMG"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="fillColor">
+                                        <color key="value" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="extensionString" value="ppt"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Document name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KqO-p2-ZUt">
+                                <rect key="frame" x="48" y="0.0" width="158" height="40"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z8H-Hy-Tcr">
+                                <rect key="frame" x="214" y="0.0" width="36" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="K7g-dO-695"/>
+                                    <constraint firstAttribute="width" constant="40" id="a6b-IQ-7AN"/>
+                                </constraints>
+                                <state key="normal" image="delete_token"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="UH2-Qt-Wqc" firstAttribute="top" secondItem="bBz-L5-zaC" secondAttribute="top" id="AI0-zg-bPR"/>
+                            <constraint firstAttribute="trailing" secondItem="Z8H-Hy-Tcr" secondAttribute="trailing" id="FDz-cc-6kw"/>
+                            <constraint firstItem="KqO-p2-ZUt" firstAttribute="leading" secondItem="UH2-Qt-Wqc" secondAttribute="trailing" constant="8" id="Gia-QV-mn9"/>
+                            <constraint firstItem="KqO-p2-ZUt" firstAttribute="top" secondItem="bBz-L5-zaC" secondAttribute="top" id="HNf-9X-MOL"/>
+                            <constraint firstItem="Z8H-Hy-Tcr" firstAttribute="leading" secondItem="KqO-p2-ZUt" secondAttribute="trailing" id="J08-VD-nni"/>
+                            <constraint firstAttribute="bottom" secondItem="UH2-Qt-Wqc" secondAttribute="bottom" id="TSa-dR-Aut"/>
+                            <constraint firstAttribute="bottom" secondItem="KqO-p2-ZUt" secondAttribute="bottom" id="fVh-un-HdW"/>
+                            <constraint firstItem="UH2-Qt-Wqc" firstAttribute="leading" secondItem="bBz-L5-zaC" secondAttribute="leading" id="r7n-as-RtF"/>
+                            <constraint firstAttribute="bottom" secondItem="Z8H-Hy-Tcr" secondAttribute="bottom" id="xrH-Lp-PUx"/>
+                            <constraint firstItem="Z8H-Hy-Tcr" firstAttribute="top" secondItem="bBz-L5-zaC" secondAttribute="top" id="xtz-a6-I78"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="bBz-L5-zaC" secondAttribute="trailing" id="2sD-Fx-yNq"/>
+                <constraint firstAttribute="bottom" secondItem="bBz-L5-zaC" secondAttribute="bottom" id="g6J-Ty-LYB"/>
+                <constraint firstItem="bBz-L5-zaC" firstAttribute="top" secondItem="QqA-gj-hb5" secondAttribute="top" id="szO-8G-yhi"/>
+                <constraint firstItem="bBz-L5-zaC" firstAttribute="leading" secondItem="QqA-gj-hb5" secondAttribute="leading" id="umh-7K-Spa"/>
+            </constraints>
+            <size key="customSize" width="547" height="83"/>
+            <connections>
+                <outlet property="customContentView" destination="bBz-L5-zaC" id="kTG-Nd-KLr"/>
+                <outlet property="fileExtensionView" destination="UH2-Qt-Wqc" id="97F-5W-PVg"/>
+                <outlet property="nameLabel" destination="KqO-p2-ZUt" id="iiK-gg-gyl"/>
+            </connections>
+            <point key="canvasLocation" x="-363" y="-431"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="delete_token" width="9" height="9"/>
+    </resources>
+</document>
