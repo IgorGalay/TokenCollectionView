@@ -30,7 +30,7 @@ class MainTableViewController: UITableViewController {
         items.append("4444")
         items.append("55555")
         items.append("1")
-        items.append("2255555")
+        items.append("2255555225555522555552255555225555522555552255555xxxxx")
         items.append("333")
         items.append(" 4444")
         items.append("Lorem")
@@ -57,6 +57,8 @@ class MainTableViewController: UITableViewController {
             testArray.append(("5", fifth))
         }
         
+        
+        
         tableView.estimatedRowHeight = 300.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
@@ -79,10 +81,13 @@ class MainTableViewController: UITableViewController {
     }
     
     @IBAction func printContentSize(_ sender: Any) {
-        let cell = tableView.visibleCells[0] as! FirstTableViewCell
-        print(cell.collectionView.collectionViewLayout.collectionViewContentSize)
-        self.tableView.layoutIfNeeded()
-        self.tableView.setNeedsDisplay()
+//        let cell = tableView.visibleCells[0] as! FirstTableViewCell
+//        print(cell.collectionView.collectionViewLayout.collectionViewContentSize)
+//        self.tableView.layoutIfNeeded()
+//        self.tableView.setNeedsDisplay()
+        
+        testArray.removeLast()
+        tableView.reloadData()
     }
 
 }
@@ -104,7 +109,16 @@ extension MainTableViewController : ImageCollectionViewDelegate, DocumentsCollec
     }
     
     func previewDocument(item: String) {
-        // ...
+        if let fileURL = Bundle.main.url(forResource: "guide_id_2014", withExtension: "pdf") {
+            if FileManager.default.fileExists(atPath: fileURL.path) {
+                self.fileURL = fileURL
+                if QLPreviewController.canPreview(fileURL as NSURL) {
+                    quickLookController.currentPreviewItemIndex = 0
+                    quickLookController.refreshCurrentPreviewItem()
+                    navigationController?.pushViewController(quickLookController, animated: true)
+                }
+            }
+        }
     }
     
 }

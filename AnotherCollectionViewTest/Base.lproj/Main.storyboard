@@ -24,11 +24,11 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="tableCell" rowHeight="247" id="SiP-Cz-gkX" customClass="FirstTableViewCell" customModule="AnotherCollectionViewTest" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="tableCell" rowHeight="247" id="SiP-Cz-gkX" customClass="FirstTableViewCell" customModule="AnotherCollectionViewTest" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="247"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SiP-Cz-gkX" id="QOP-nE-uPO">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="247"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="246"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6PO-cy-rlM" customClass="MainCollectionView" customModule="AnotherCollectionViewTest" customModuleProvider="target">
@@ -68,7 +68,9 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="HeightBetweenCollectionViewsConstraint" destination="oBc-e0-Zs6" id="nvI-4q-oBh"/>
                                     <outlet property="collectionView" destination="6PO-cy-rlM" id="CE2-2F-vSQ"/>
+                                    <outlet property="imageCollectionVIewHeightConstraint" destination="uBj-Ho-7it" id="rfz-JC-rcI"/>
                                     <outlet property="imagesCollectionView" destination="P7c-ei-eK1" id="fII-Ef-K1d"/>
                                 </connections>
                             </tableViewCell>

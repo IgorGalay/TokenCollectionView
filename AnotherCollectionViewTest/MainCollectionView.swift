@@ -30,6 +30,9 @@ class MainCollectionView: UICollectionView, UICollectionViewDataSource, UICollec
         
         let nib = UINib(nibName: "TokenCollectionViewCell", bundle: nil)
         self.register(nib, forCellWithReuseIdentifier: otherDocumentCellIdentifier)
+        
+        let secondNib = UINib(nibName: "AddDocumentCollectionViewCell", bundle: nil)
+        self.register(secondNib, forCellWithReuseIdentifier: "AddDocumentCollectionViewCell")
 
         
         collectionViewLayout = attachmentFlowLayout()
@@ -58,15 +61,21 @@ class MainCollectionView: UICollectionView, UICollectionViewDataSource, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return items.count
+        return items.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: otherDocumentCellIdentifier, for: indexPath) as! TokenCollectionViewCell
-        let documentType = indexPath.row % 2 == 0 ? SupportedFileFormat.ppt : SupportedFileFormat.doc
-        cell.configure(with: items[indexPath.row], type: documentType)
-        self.setNeedsLayout()
-        return cell
+        if indexPath.row < items.count {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: otherDocumentCellIdentifier, for: indexPath) as! TokenCollectionViewCell
+            let documentType = indexPath.row % 2 == 0 ? SupportedFileFormat.ppt : SupportedFileFormat.doc
+            cell.configure(with: items[indexPath.row], type: documentType)
+            cell.setup()
+            self.setNeedsLayout()
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddDocumentCollectionViewCell", for: indexPath) as! AddDocumentCollectionViewCell
+            return cell
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

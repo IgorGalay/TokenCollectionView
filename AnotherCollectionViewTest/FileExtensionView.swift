@@ -47,7 +47,7 @@ public class FileExtensionView: UIView {
             
             ovalLayer.path = path.cgPath
             ovalLayer.lineWidth = lineWidth
-            ovalLayer.strokeColor = UIColor.darkGray.cgColor
+            ovalLayer.strokeColor = UIColor(red: 221.0/255.0, green: 221.0/255.0, blue: 221.0/255.0, alpha: 1.0).cgColor
             updateFill()
         }
         ovalLayer.frame = layer.bounds
@@ -63,6 +63,13 @@ public class FileExtensionView: UIView {
             self.addSubview(extensionLabel)
         }
         updateLabel()
+    }
+    
+    internal func cleanup() {
+        self.ovalLayer.removeFromSuperlayer()
+        self.ovalLayer = nil
+        self.extensionLabel.removeFromSuperview()
+        self.extensionLabel = nil
     }
     
     private func updateFill() {

@@ -76,7 +76,9 @@ extension ImageCollectionView : UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        previewingDelegate?.preview(image: testArray[indexPath.row])
+//        previewingDelegate?.preview(image: testArray[indexPath.row])
+        let cell = collectionView.cellForItem(at: indexPath) as! ImageDocumentCollectionViewCell
+        cell.attemptDelete()
     }
     
 }

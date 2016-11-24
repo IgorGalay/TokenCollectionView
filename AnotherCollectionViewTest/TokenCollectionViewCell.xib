@@ -36,13 +36,13 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Document name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KqO-p2-ZUt">
-                                <rect key="frame" x="48" y="0.0" width="158" height="40"/>
+                                <rect key="frame" x="48" y="0.0" width="162" height="40"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z8H-Hy-Tcr">
-                                <rect key="frame" x="214" y="0.0" width="36" height="40"/>
+                                <rect key="frame" x="210" y="0.0" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="K7g-dO-695"/>
                                     <constraint firstAttribute="width" constant="40" id="a6b-IQ-7AN"/>
@@ -77,6 +77,8 @@
                 <outlet property="customContentView" destination="bBz-L5-zaC" id="kTG-Nd-KLr"/>
                 <outlet property="fileExtensionView" destination="UH2-Qt-Wqc" id="97F-5W-PVg"/>
                 <outlet property="nameLabel" destination="KqO-p2-ZUt" id="iiK-gg-gyl"/>
+                <outlet property="removeButton" destination="Z8H-Hy-Tcr" id="rVY-2t-7Xw"/>
+                <outlet property="removeButtonWidthConstraint" destination="a6b-IQ-7AN" id="cRq-SS-9hN"/>
             </connections>
             <point key="canvasLocation" x="-363" y="-431"/>
         </collectionViewCell>

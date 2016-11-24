@@ -15,11 +15,19 @@ class TokenCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var fileExtensionView: FileExtensionView!
     @IBOutlet weak var nameLabel: UILabel!
     
+    @IBOutlet weak var removeButtonWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var removeButton: UIButton!
+    
     var borderLayer : CAShapeLayer?
     let borderLineWidth : CGFloat = 1.0
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        let maxAcceptableSize = UIScreen.main.bounds.width - 120.0
+        let heightConstraint = NSLayoutConstraint(item: nameLabel, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.lessThanOrEqual, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: maxAcceptableSize)
+        heightConstraint.priority = 1000
+        nameLabel.addConstraint(heightConstraint)
     }
     
     override func layoutSubviews() {
@@ -31,8 +39,8 @@ class TokenCollectionViewCell: UICollectionViewCell {
             let path = UIBezierPath(roundedRect: rect, cornerRadius: rect.height/2)
             
             borderLayer?.path = path.cgPath
-            borderLayer?.fillColor = UIColor.lightGray.cgColor
-            borderLayer?.strokeColor = UIColor.darkGray.cgColor
+            borderLayer?.fillColor = UIColor(red: 249.0/255.0, green: 249.0/255.0, blue: 249.0/255.0, alpha: 1.0).cgColor
+            borderLayer?.strokeColor = UIColor(red: 221.0/255.0, green: 221.0/255.0, blue: 221.0/255.0, alpha: 1.0).cgColor
             borderLayer?.lineWidth = borderLineWidth
             
             customContentView.layer.insertSublayer(borderLayer!, at: 0)
@@ -48,8 +56,20 @@ class TokenCollectionViewCell: UICollectionViewCell {
         
         nameLabel.text = fileName
         nameLabel.sizeToFit()
-        self.setNeedsLayout()
-        self.setNeedsDisplay()
+    }
+    
+    func setup() {
+//        removeButton.isHidden = true
+//        removeButton.isUserInteractionEnabled = false
+//        removeButtonWidthConstraint.constant /= 2
+    }
+    
+    override func prepareForReuse() {
+        borderLayer?.removeFromSuperlayer()
+        borderLayer = nil
+        nameLabel.text = nil
+        fileExtensionView.cleanup()
+        
     }
 
 }
