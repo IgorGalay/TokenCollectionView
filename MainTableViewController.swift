@@ -7,11 +7,16 @@
 //
 
 import UIKit
+import QuickLook
 
 class MainTableViewController: UITableViewController {
 
     var items = [String]()
-    var testArray = [UIImage]()
+    var testArray = [(String, UIImage)]()
+    
+    var fileURL : URL?
+    
+    let quickLookController = QLPreviewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,24 +41,26 @@ class MainTableViewController: UITableViewController {
         items.append("All")
         items.append("Final")
         
-        if let first = UIImage(named: "boss") {
-            testArray.append(first)
+        if let first = UIImage(named: "1") {
+            testArray.append(("1", first))
         }
-        if let second = UIImage(named: "dubldom") {
-            testArray.append(second)
+        if let second = UIImage(named: "2") {
+            testArray.append(("2", second))
         }
-        if let third = UIImage(named: "schema") {
-            testArray.append(third)
+        if let third = UIImage(named: "3") {
+            testArray.append(("3", third))
         }
-        if let foth = UIImage(named: "boss") {
-            testArray.append(foth)
+        if let foth = UIImage(named: "4") {
+            testArray.append(("4", foth))
         }
-        if let fifth = UIImage(named: "dubldom") {
-            testArray.append(fifth)
+        if let fifth = UIImage(named: "5") {
+            testArray.append(("5", fifth))
         }
         
         tableView.estimatedRowHeight = 300.0
         tableView.rowHeight = UITableViewAutomaticDimension
+        
+        quickLookController.dataSource = self
     }
 
     // MARK: - Table view data source
@@ -67,7 +74,7 @@ class MainTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath) as! FirstTableViewCell
-        cell.configure(data: items, images: testArray)
+        cell.configure(data: items, images: testArray, previewingDelegate: self)
         return cell
     }
     
@@ -78,4 +85,39 @@ class MainTableViewController: UITableViewController {
         self.tableView.setNeedsDisplay()
     }
 
+}
+
+extension MainTableViewController : ImageCollectionViewDelegate, DocumentsCollectionViewDelegate {
+    
+    func preview(image : (String, UIImage)) {
+        
+        if let fileURL = Bundle.main.url(forResource: image.0, withExtension: "png") {
+            if FileManager.default.fileExists(atPath: fileURL.path) {
+                self.fileURL = fileURL
+                if QLPreviewController.canPreview(fileURL as NSURL) {
+                    quickLookController.currentPreviewItemIndex = 0
+                    quickLookController.refreshCurrentPreviewItem()
+                    navigationController?.pushViewController(quickLookController, animated: true)
+                }
+            }
+        }
+    }
+    
+    func previewDocument(item: String) {
+        // ...
+    }
+    
+}
+
+extension MainTableViewController : QLPreviewControllerDataSource {
+    
+    func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
+        return fileURL != nil ? 1 : 0
+    }
+    
+    func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
+        guard let fileURL = fileURL else { return NSURL(fileURLWithPath: "") }
+        return fileURL as NSURL
+    }
+    
 }

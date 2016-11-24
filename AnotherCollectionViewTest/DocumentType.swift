@@ -8,56 +8,102 @@
 
 import UIKit
 
-enum DocumentType: String {
+struct DocumentFileFormat {
     
-    case pdf
+    let fileExtension: String
+    
+    var previewable : Bool {
+        if SupportedFileFormat(extensionString: fileExtension) != nil {
+            return true
+        }
+        return false
+    }
+    
+    var associatedColor : UIColor {
+        if let supportedType = SupportedFileFormat(extensionString: fileExtension) {
+            return supportedType.color ?? UIColor.lightGray
+        }
+        return UIColor.lightGray
+    }
+    
+    var isImageFormat : Bool {
+        if let format = SupportedFileFormat(extensionString: fileExtension) {
+            return format.isImage
+        }
+        return false
+    }
+    
+}
+
+enum SupportedFileFormat: String {
+    
+    // Images
+    case jpg
+    case jpeg
+    case png
+    
+    // iWork docs
+    case pages
+    case key
+    case numbers
+    
+    // MS office docs
     case doc
     case docx
     case xls
     case xlsx
     case ppt
     case pptx
+    
+    // Other
+    case pdf
+    case csv
+    case txt
+    case rtf
+
     case unknown
     
     init?(extensionString: String) {
-        if let type = DocumentType(rawValue: extensionString) {
+        if let type = SupportedFileFormat(rawValue: extensionString) {
             self = type
-        } else {
-            self = .unknown
         }
+        return nil
     }
     
-    var extensionString: String {
-        return self.rawValue
-    }
-    
-    var previewable : Bool {
+    var isImage : Bool {
         switch self {
-        case .unknown:
-            return false
-        default:
+        case .jpg, .jpeg, .png:
             return true
+        default:
+            return false
         }
     }
     
-    var color : UIColor {
+    var color : UIColor? {
         switch self {
-        case .pdf:
+        // Images
+        case .jpg, .jpeg, .png, .unknown:
+            return nil
+            
+        // iWork docs
+        case .pages:
+            return UIColor.cyan
+        case .key:
             return UIColor.orange
-        case .doc:
+        case .numbers:
+            return UIColor.yellow
+            
+        // MS office docs
+        case .doc, .docx:
             return UIColor.blue
-        case .docx:
-            return UIColor.blue
-        case .xls:
+        case .xls, .xlsx:
             return UIColor.green
-        case .xlsx:
-            return UIColor.green
-        case .ppt:
+        case .ppt, .pptx:
             return UIColor.red
-        case .pptx:
+            
+        // Other
+        case .pdf, .csv, .txt, .rtf :
             return UIColor.red
-        case .unknown:
-            return UIColor.gray
         }
     }
     

@@ -9,30 +9,28 @@
 import Foundation
 
 class AttachedDocument {
-    
-    let name : String = ""
-    let rawType : String = ""
-    let url : String = ""
-    let size : Int = 0
-
+    dynamic var name : String = ""
+    dynamic var rawType : String = ""
+    dynamic var url : String = ""
+    dynamic var path : String?
+    dynamic var size : Int = 0
 }
 
 struct AttachedDocumentStruct {
     
     let name : String
-    let type : DocumentType
+    let type : DocumentFileFormat
     let url : String
+    let path : URL?
     let size : Int
     
     init(document : AttachedDocument) {
         self.name = document.name
-        if let validType = DocumentType(extensionString: document.rawType) {
-            self.type = validType
-        } else {
-            self.type = DocumentType.unknown
-        }
+        self.type = DocumentFileFormat(fileExtension: document.rawType)
         self.url = document.url
         self.size = document.size
+        guard let path = document.path else { self.path = nil; return }
+        self.path = URL(string: path) ?? nil
     }
     
 }

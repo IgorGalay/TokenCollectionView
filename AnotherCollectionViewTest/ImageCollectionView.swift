@@ -10,14 +10,20 @@ import UIKit
 
 private let imageDocumentCellIdentifier = "ImageDocumentCell"
 
+protocol ImageCollectionViewDelegate : class {
+    func preview(image : (String, UIImage))
+}
+
 class ImageCollectionView: UICollectionView {
 
-    var testArray = [UIImage]() {
+    var testArray = [(String, UIImage)]() {
         didSet {
             reloadData()
             layoutIfNeeded()
         }
     }
+    
+    weak var previewingDelegate: ImageCollectionViewDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -62,11 +68,15 @@ extension ImageCollectionView : UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageDocumentCell", for: indexPath) as! ImageDocumentCollectionViewCell
-        let image = testArray[indexPath.row]
+        let image = testArray[indexPath.row].1
         cell.configure(with: image)
         self.setNeedsLayout()
         return cell
         
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        previewingDelegate?.preview(image: testArray[indexPath.row])
     }
     
 }

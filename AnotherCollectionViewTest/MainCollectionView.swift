@@ -10,6 +10,10 @@ import UIKit
 
 private let otherDocumentCellIdentifier = "TokenCollectionViewCell"
 
+protocol DocumentsCollectionViewDelegate : class {
+    func previewDocument(item : String)
+}
+
 class MainCollectionView: UICollectionView, UICollectionViewDataSource, UICollectionViewDelegate {
 
     var items = [String]() {
@@ -18,6 +22,8 @@ class MainCollectionView: UICollectionView, UICollectionViewDataSource, UICollec
             layoutIfNeeded()
         }
     }
+    
+    weak var previewingDelegate: DocumentsCollectionViewDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -45,22 +51,25 @@ class MainCollectionView: UICollectionView, UICollectionViewDataSource, UICollec
         return layout
     }
     
+    override var intrinsicContentSize: CGSize {
+        get {
+            return self.collectionViewLayout.collectionViewContentSize
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return items.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: otherDocumentCellIdentifier, for: indexPath) as! TokenCollectionViewCell
-        let documentType = indexPath.row % 2 == 0 ? DocumentType.ppt : DocumentType.doc
+        let documentType = indexPath.row % 2 == 0 ? SupportedFileFormat.ppt : SupportedFileFormat.doc
         cell.configure(with: items[indexPath.row], type: documentType)
         self.setNeedsLayout()
         return cell
     }
     
-    override var intrinsicContentSize: CGSize {
-        get {
-            return self.collectionViewLayout.collectionViewContentSize
-        }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        previewingDelegate?.previewDocument(item: items[indexPath.row])
     }
-
 }

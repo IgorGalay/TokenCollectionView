@@ -40,9 +40,12 @@ class TokenCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    public func configure(with fileName: String, type: DocumentType) {
-        fileExtensionView.extensionString = type.extensionString
-        fileExtensionView.fillColor = type.color
+    public func configure(with fileName: String, type: SupportedFileFormat) {
+        fileExtensionView.extensionString = type.rawValue
+        if let color = type.color {
+            fileExtensionView.fillColor = color
+        }
+        
         nameLabel.text = fileName
         nameLabel.sizeToFit()
         self.setNeedsLayout()
