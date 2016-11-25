@@ -186,7 +186,7 @@ extension MainTableViewController : QLPreviewControllerDataSource {
 extension MainTableViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -194,7 +194,7 @@ extension MainTableViewController : UIImagePickerControllerDelegate, UINavigatio
             testArray.append(("custom",image))
             self.tableView.reloadData()
         }
-        picker.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
 }
