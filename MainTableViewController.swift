@@ -17,6 +17,7 @@ class MainTableViewController: UITableViewController {
     var fileURL : URL?
     
     let quickLookController = QLPreviewController()
+    let imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,6 +64,7 @@ class MainTableViewController: UITableViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         
         quickLookController.dataSource = self
+        imagePicker.delegate = self
     }
 
     // MARK: - Table view data source
@@ -121,6 +123,35 @@ extension MainTableViewController : ImageCollectionViewDelegate, DocumentsCollec
         }
     }
     
+    func showDocumentAddingOptions() {
+        let actionSheetController = UIAlertController(title: "Добавить", message: nil, preferredStyle: .actionSheet)
+        
+        let addImageAction = UIAlertAction(title: "Изображение", style: .default) { [weak self] (_) in
+            guard let strongSelf = self else { return }
+            
+            strongSelf.presentedViewController?.dismiss(animated: false, completion: nil)
+            
+            strongSelf.imagePicker.allowsEditing = false
+            strongSelf.imagePicker.sourceType = .photoLibrary
+            
+            strongSelf.present(strongSelf.imagePicker, animated: true, completion: nil)
+        }
+        
+        let addDocumentAction = UIAlertAction(title: "Документ", style: .default) { (_) in
+            // open DocumentPicker
+        }
+        
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel) { [weak self] (_) in
+            self?.presentedViewController?.dismiss(animated: true, completion: nil)
+        }
+        
+        actionSheetController.addAction(addImageAction)
+        actionSheetController.addAction(addDocumentAction)
+        actionSheetController.addAction(cancelAction)
+        
+        self.present(actionSheetController, animated: true, completion: nil)
+    }
+    
 }
 
 extension MainTableViewController : QLPreviewControllerDataSource {
@@ -132,6 +163,22 @@ extension MainTableViewController : QLPreviewControllerDataSource {
     func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
         guard let fileURL = fileURL else { return NSURL(fileURLWithPath: "") }
         return fileURL as NSURL
+    }
+    
+}
+
+extension MainTableViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            testArray.append(("custom",image))
+            self.tableView.reloadData()
+        }
+        picker.dismiss(animated: true, completion: nil)
     }
     
 }

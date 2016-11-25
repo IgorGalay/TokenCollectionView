@@ -12,6 +12,7 @@ private let otherDocumentCellIdentifier = "TokenCollectionViewCell"
 
 protocol DocumentsCollectionViewDelegate : class {
     func previewDocument(item : String)
+    func showDocumentAddingOptions()
 }
 
 class MainCollectionView: UICollectionView, UICollectionViewDataSource, UICollectionViewDelegate {
@@ -74,11 +75,22 @@ class MainCollectionView: UICollectionView, UICollectionViewDataSource, UICollec
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddDocumentCollectionViewCell", for: indexPath) as! AddDocumentCollectionViewCell
+            cell.delegate = self
             return cell
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        previewingDelegate?.previewDocument(item: items[indexPath.row])
+        if indexPath.row < items.count {
+            previewingDelegate?.previewDocument(item: items[indexPath.row])
+        } else {
+            previewingDelegate?.showDocumentAddingOptions()
+        }
+    }
+}
+
+extension MainCollectionView : DocumentAdditionDelegate {
+    internal func showDocumentAddingOptions() {
+        previewingDelegate?.showDocumentAddingOptions()
     }
 }

@@ -8,11 +8,16 @@
 
 import UIKit
 
+protocol DocumentAdditionDelegate : class {
+    func showDocumentAddingOptions()
+}
+
 class AddDocumentCollectionViewCell: UICollectionViewCell {
 
-    
     @IBOutlet weak var customContentView: UIView!
     @IBOutlet weak var addButton: UIButton!
+    
+    weak var delegate : DocumentAdditionDelegate?
     
     var borderLayer : CAShapeLayer?
     let borderLineWidth : CGFloat = 1.0
@@ -43,7 +48,7 @@ class AddDocumentCollectionViewCell: UICollectionViewCell {
     }
 
     @IBAction func addDocument(_ sender: UIButton) {
-        print("Add document action here")
+        delegate?.showDocumentAddingOptions()
     }
     
 }
