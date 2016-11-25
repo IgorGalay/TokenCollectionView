@@ -126,6 +126,19 @@ extension MainTableViewController : ImageCollectionViewDelegate, DocumentsCollec
     func showDocumentAddingOptions() {
         let actionSheetController = UIAlertController(title: "Добавить", message: nil, preferredStyle: .actionSheet)
         
+        let addPhotoAction = UIAlertAction(title: "Снимок", style: .default) { [weak self] (_) in
+            guard let strongSelf = self else { return }
+            
+            strongSelf.presentedViewController?.dismiss(animated: false, completion: nil)
+            
+            strongSelf.imagePicker.allowsEditing = true
+            strongSelf.imagePicker.sourceType = .camera
+            strongSelf.imagePicker.cameraCaptureMode = .photo
+            strongSelf.imagePicker.modalPresentationStyle = .fullScreen
+            
+            strongSelf.present(strongSelf.imagePicker, animated: true, completion: nil)
+        }
+        
         let addImageAction = UIAlertAction(title: "Изображение", style: .default) { [weak self] (_) in
             guard let strongSelf = self else { return }
             
@@ -145,6 +158,7 @@ extension MainTableViewController : ImageCollectionViewDelegate, DocumentsCollec
             self?.presentedViewController?.dismiss(animated: true, completion: nil)
         }
         
+        actionSheetController.addAction(addPhotoAction)
         actionSheetController.addAction(addImageAction)
         actionSheetController.addAction(addDocumentAction)
         actionSheetController.addAction(cancelAction)
