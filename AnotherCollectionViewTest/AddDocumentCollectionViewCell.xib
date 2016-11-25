@@ -27,7 +27,7 @@
                                     <constraint firstAttribute="width" constant="40" id="7sP-dN-2Mj"/>
                                     <constraint firstAttribute="height" constant="40" id="soe-6n-HPV"/>
                                 </constraints>
-                                <state key="normal" image="delete_token"/>
+                                <state key="normal" image="plus"/>
                                 <connections>
                                     <action selector="addDocument:" destination="gTV-IL-0wX" eventType="touchUpInside" id="bpR-Wd-Tyf"/>
                                 </connections>
@@ -69,6 +69,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="delete_token" width="9" height="9"/>
+        <image name="plus" width="15" height="15"/>
     </resources>
 </document>

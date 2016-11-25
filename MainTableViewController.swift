@@ -19,6 +19,7 @@ class MainTableViewController: UITableViewController {
     let quickLookController = QLPreviewController()
     let imagePicker = UIImagePickerController()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -132,7 +133,7 @@ extension MainTableViewController : ImageCollectionViewDelegate, DocumentsCollec
             if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
                 strongSelf.presentedViewController?.dismiss(animated: false, completion: nil)
                 
-                strongSelf.imagePicker.allowsEditing = false
+                strongSelf.imagePicker.allowsEditing = true
                 strongSelf.imagePicker.sourceType = .camera
                 strongSelf.imagePicker.cameraCaptureMode = .photo
                 strongSelf.imagePicker.modalPresentationStyle = .fullScreen
@@ -146,14 +147,18 @@ extension MainTableViewController : ImageCollectionViewDelegate, DocumentsCollec
             
             strongSelf.presentedViewController?.dismiss(animated: false, completion: nil)
             
-            strongSelf.imagePicker.allowsEditing = false
+            strongSelf.imagePicker.allowsEditing = true
             strongSelf.imagePicker.sourceType = .photoLibrary
             
             strongSelf.present(strongSelf.imagePicker, animated: true, completion: nil)
         }
         
-        let addDocumentAction = UIAlertAction(title: "Документ", style: .default) { (_) in
-            // open DocumentPicker
+        let addDocumentAction = UIAlertAction(title: "Документ", style: .default) { [weak self] (_) in
+            guard let strongSelf = self else { return }
+            let documentPicker = UIDocumentPickerViewController(documentTypes: ["public.content"], in: UIDocumentPickerMode.import)
+            documentPicker.modalPresentationStyle = .formSheet
+            documentPicker.delegate = self
+            strongSelf.present(documentPicker, animated: true, completion: nil)
         }
         
         let cancelAction = UIAlertAction(title: "Отмена", style: .cancel) { [weak self] (_) in
@@ -190,11 +195,23 @@ extension MainTableViewController : UIImagePickerControllerDelegate, UINavigatio
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
             testArray.append(("custom",image))
             self.tableView.reloadData()
         }
+        // This point could be used to create a sctruct with photo and attach name and JPG type which is default
         dismiss(animated: true, completion: nil)
+    }
+    
+}
+
+extension MainTableViewController : UIDocumentPickerDelegate {
+    
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
+        let filename = url.deletingPathExtension().lastPathComponent
+        let pathExtension = url.pathExtension
+        print(filename)
+        print(pathExtension)
     }
     
 }

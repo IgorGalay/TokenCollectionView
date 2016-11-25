@@ -48,6 +48,7 @@
 		C29C5DCF1DE73B1000711FF9 /* AddDocumentCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDocumentCollectionViewCell.swift; sourceTree = "<group>"; };
 		C29C5DD01DE73B1000711FF9 /* AddDocumentCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddDocumentCollectionViewCell.xib; sourceTree = "<group>"; };
 		C29C5DD31DE73C9500711FF9 /* PlusButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlusButton.swift; sourceTree = "<group>"; };
+		C2B5911F1DE84F8D00BCE0AA /* AnotherCollectionViewTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AnotherCollectionViewTest.entitlements; sourceTree = "<group>"; };
 		C2C22B5E1DE6E74D00CE24E6 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
 		C2C22B661DE70C6500CE24E6 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
 		C2C22B681DE70C7000CE24E6 /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
@@ -94,6 +95,7 @@
 		C28AEA781DE42FD900761AEE /* AnotherCollectionViewTest */ = {
 			isa = PBXGroup;
 			children = (
+				C2B5911F1DE84F8D00BCE0AA /* AnotherCollectionViewTest.entitlements */,
 				C28AEA791DE42FD900761AEE /* AppDelegate.swift */,
 				C28AEA7D1DE42FD900761AEE /* Main.storyboard */,
 				C28AEA8B1DE430B600761AEE /* MainTableViewController.swift */,
@@ -158,6 +160,11 @@
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = C69Q9E6SNL;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -339,6 +346,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AnotherCollectionViewTest/AnotherCollectionViewTest.entitlements;
 				DEVELOPMENT_TEAM = C69Q9E6SNL;
 				INFOPLIST_FILE = AnotherCollectionViewTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -352,6 +360,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AnotherCollectionViewTest/AnotherCollectionViewTest.entitlements;
 				DEVELOPMENT_TEAM = C69Q9E6SNL;
 				INFOPLIST_FILE = AnotherCollectionViewTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
