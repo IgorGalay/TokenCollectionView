@@ -129,14 +129,16 @@ extension MainTableViewController : ImageCollectionViewDelegate, DocumentsCollec
         let addPhotoAction = UIAlertAction(title: "Снимок", style: .default) { [weak self] (_) in
             guard let strongSelf = self else { return }
             
-            strongSelf.presentedViewController?.dismiss(animated: false, completion: nil)
-            
-            strongSelf.imagePicker.allowsEditing = true
-            strongSelf.imagePicker.sourceType = .camera
-            strongSelf.imagePicker.cameraCaptureMode = .photo
-            strongSelf.imagePicker.modalPresentationStyle = .fullScreen
-            
-            strongSelf.present(strongSelf.imagePicker, animated: true, completion: nil)
+            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+                strongSelf.presentedViewController?.dismiss(animated: false, completion: nil)
+                
+                strongSelf.imagePicker.allowsEditing = false
+                strongSelf.imagePicker.sourceType = .camera
+                strongSelf.imagePicker.cameraCaptureMode = .photo
+                strongSelf.imagePicker.modalPresentationStyle = .fullScreen
+                
+                strongSelf.present(strongSelf.imagePicker, animated: true, completion: nil)
+            }
         }
         
         let addImageAction = UIAlertAction(title: "Изображение", style: .default) { [weak self] (_) in
