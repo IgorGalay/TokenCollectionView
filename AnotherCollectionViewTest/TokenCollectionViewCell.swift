@@ -25,7 +25,7 @@ class TokenCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         
         
-        let labelLeadingSpaceWidth : CGFloat = 8.0
+        let labelLeadingSpaceWidth : CGFloat = 10.0
         let maxAcceptableSize = UIScreen.main.bounds.width - removeButtonWidthConstraint.constant - fileExtensionView.frame.width - labelLeadingSpaceWidth - self.layoutMargins.left - self.layoutMargins.right
         let heightConstraint = NSLayoutConstraint(item: nameLabel, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.lessThanOrEqual, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: maxAcceptableSize)
         heightConstraint.priority = 1000

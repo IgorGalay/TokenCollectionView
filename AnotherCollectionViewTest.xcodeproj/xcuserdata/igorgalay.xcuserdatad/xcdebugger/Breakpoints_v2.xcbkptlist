@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AnotherCollectionViewTest/TokenCollectionViewCell.swift"
-            timestampString = "501767067.948047"
+            timestampString = "501768975.745056"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
             landmarkName = "awakeFromNib()"
             landmarkType = "7">
          </BreakpointContent>

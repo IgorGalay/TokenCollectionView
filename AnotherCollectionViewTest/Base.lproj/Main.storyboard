@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="S06-m3-BK1">
-    <device id="retina5_5" orientation="portrait">
+    <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,24 +15,24 @@
             <objects>
                 <tableViewController id="xvc-uG-1mR" customClass="MainTableViewController" customModule="AnotherCollectionViewTest" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="247" sectionHeaderHeight="28" sectionFooterHeight="28" id="Ilp-0x-DQa">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="xUq-JN-Vyj">
-                            <rect key="frame" x="0.0" y="339" width="414" height="44"/>
+                            <rect key="frame" x="0.0" y="339" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="tableCell" rowHeight="247" id="SiP-Cz-gkX" customClass="FirstTableViewCell" customModule="AnotherCollectionViewTest" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="247"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="247"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SiP-Cz-gkX" id="QOP-nE-uPO">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="246.66666666666666"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="246"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6PO-cy-rlM" customClass="MainCollectionView" customModule="AnotherCollectionViewTest" customModuleProvider="target">
-                                            <rect key="frame" x="8" y="116" width="398" height="122"/>
+                                            <rect key="frame" x="8" y="116" width="359" height="122"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="XOw-ab-3u8">
                                                 <size key="itemSize" width="227" height="50"/>
@@ -43,7 +43,7 @@
                                             <cells/>
                                         </collectionView>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="P7c-ei-eK1" customClass="ImageCollectionView" customModule="AnotherCollectionViewTest" customModuleProvider="target">
-                                            <rect key="frame" x="8" y="8" width="398" height="100"/>
+                                            <rect key="frame" x="8" y="8" width="359" height="100"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="100" id="uBj-Ho-7it"/>
