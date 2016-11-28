@@ -15,39 +15,51 @@ protocol DocumentsCollectionViewDelegate : class {
     func showDocumentAddingOptions()
 }
 
-class MainCollectionView: UICollectionView, UICollectionViewDataSource, UICollectionViewDelegate {
+class MainCollectionView: UICollectionView { // rename to AttachedDocumentsCollectionView
 
-    var items = [String]() {
+    fileprivate var documents = [String]() {
         didSet {
-            
             reloadData()
             layoutIfNeeded()
         }
     }
+    fileprivate weak var previewingDelegate: DocumentsCollectionViewDelegate?
+    private var state: AttachedDocumentsPresentingState?
     
-    weak var previewingDelegate: DocumentsCollectionViewDelegate?
-    
+    // MARK: - Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        registerCells()
+        setup()
+    }
+    
+    private func setup() {
+        collectionViewLayout = attachmentFlowLayout()
+        dataSource = self
+        delegate = self
+    }
+    
+    // MARK: - Configuration
+    internal func configure(with state: AttachedDocumentsPresentingState, documents: [String], delegate: DocumentsCollectionViewDelegate?) {
+        self.state = state
+        self.documents = documents
+        self.previewingDelegate = delegate
+    }
+    
+    // MARK: - Handy methods
+    private func registerCells() {
         let nib = UINib(nibName: "TokenCollectionViewCell", bundle: nil)
         self.register(nib, forCellWithReuseIdentifier: otherDocumentCellIdentifier)
         
         let secondNib = UINib(nibName: "AddDocumentCollectionViewCell", bundle: nil)
         self.register(secondNib, forCellWithReuseIdentifier: "AddDocumentCollectionViewCell")
-
-        
-        collectionViewLayout = attachmentFlowLayout()
-        dataSource = self
-        delegate = self
-        backgroundColor = UIColor.orange
-//        self.layoutIfNeeded()
     }
     
     private func attachmentFlowLayout() -> UICollectionViewFlowLayout {
         let layout = CustomCollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        let estimatedWidth : CGFloat = 150
+        let estimatedWidth : CGFloat = 5
         let exactHeight : CGFloat = 40.0
         layout.estimatedItemSize = CGSize(width: estimatedWidth, height: exactHeight)
         layout.sectionInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
@@ -57,22 +69,19 @@ class MainCollectionView: UICollectionView, UICollectionViewDataSource, UICollec
         layout.footerReferenceSize = CGSize(width: 0.0, height: 0.0)
         return layout
     }
-    
-    override var intrinsicContentSize: CGSize {
-        get {
-            return self.collectionViewLayout.collectionViewContentSize
-        }
-    }
-    
+
+}
+
+extension MainCollectionView: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return items.count + 1
+        return documents.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.row < items.count {
+        if indexPath.row < documents.count {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: otherDocumentCellIdentifier, for: indexPath) as! TokenCollectionViewCell
             let documentType = indexPath.row % 2 == 0 ? SupportedFileFormat.ppt : SupportedFileFormat.doc
-            cell.configure(with: items[indexPath.row], type: documentType)
+            cell.configure(with: documents[indexPath.row], type: documentType)
             cell.setup()
             self.setNeedsLayout()
             return cell
@@ -84,10 +93,21 @@ class MainCollectionView: UICollectionView, UICollectionViewDataSource, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row < items.count {
-            previewingDelegate?.previewDocument(item: items[indexPath.row])
+        if indexPath.row < documents.count {
+            previewingDelegate?.previewDocument(item: documents[indexPath.row])
         } else {
             previewingDelegate?.showDocumentAddingOptions()
+        }
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        get {
+            // FIXME: Crutch
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                let contentSize = self.collectionViewLayout.collectionViewContentSize
+                return CGSize(width: contentSize.width/2.0, height: contentSize.height/2.0)
+            }
+            return self.collectionViewLayout.collectionViewContentSize
         }
     }
 }

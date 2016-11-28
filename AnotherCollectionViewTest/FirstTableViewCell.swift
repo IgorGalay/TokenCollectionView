@@ -8,40 +8,37 @@
 
 import UIKit
 
+enum AttachedDocumentsPresentingState {
+    case preview
+    case compose
+}
+
+let kImagesCollectionViewHeight: CGFloat = 100.0
+let kSpaceBetweenCollectionViews: CGFloat = 8.0
+
+
 class FirstTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var collectionView: MainCollectionView!
+    @IBOutlet weak var collectionView: MainCollectionView! // rename to documentsCollectionView
     @IBOutlet weak var imagesCollectionView: ImageCollectionView!
     
     @IBOutlet weak var imageCollectionVIewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var HeightBetweenCollectionViewsConstraint: NSLayoutConstraint!
     
+//    private var state: AttachedDocumentCellState = .preview //default
     
-    internal func configure<PreviewingDelegate : ImageCollectionViewDelegate & DocumentsCollectionViewDelegate>(data: [String], images: [(String, UIImage)], previewingDelegate: PreviewingDelegate) {
+    
+    internal func configure<PreviewingDelegate : ImageCollectionViewDelegate & DocumentsCollectionViewDelegate>(with state: AttachedDocumentsPresentingState, data: [String], images: [(String, UIImage)], previewingDelegate: PreviewingDelegate) {
         // TODO: separate images and other files here, and add data t ocollection views
+        setupImagesCollectionView(imagesCount: images.count)
         
-        if images.count == 0 {
-            collapseImageCollectionView()
-        } else if imageCollectionVIewHeightConstraint.constant == 0.0 {
-            presentImageCollectionView()
-        }
-        
-        imagesCollectionView.testArray = images
-        imagesCollectionView.previewingDelegate = previewingDelegate
-        collectionView.items = data
-        collectionView.previewingDelegate = previewingDelegate
+        imagesCollectionView.configure(with: state, images: images, delegate: previewingDelegate)
+        collectionView.configure(with: state, documents: data, delegate: previewingDelegate)
     }
     
-    private func collapseImageCollectionView() {
-        imageCollectionVIewHeightConstraint.constant = 0.0
-        HeightBetweenCollectionViewsConstraint.constant = 0.0
-//        self.layoutIfNeeded()
-    }
-    
-    private func presentImageCollectionView() {
-        imageCollectionVIewHeightConstraint.constant = 100.0
-        HeightBetweenCollectionViewsConstraint.constant = 8.0
-//        self.layoutIfNeeded()
+    private func setupImagesCollectionView(imagesCount: Int) {
+        imageCollectionVIewHeightConstraint.constant = (imagesCount != 0 && imageCollectionVIewHeightConstraint.constant != 0.0) ? kImagesCollectionViewHeight : 0.0
+        HeightBetweenCollectionViewsConstraint.constant = (imagesCount != 0 && imageCollectionVIewHeightConstraint.constant != 0.0) ? kSpaceBetweenCollectionViews : 0.0
     }
     
     override func prepareForReuse() {

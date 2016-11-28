@@ -22,9 +22,6 @@ class MainTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        let attachedDocumentsCellNib = UINib(nibName: "AttachedDocumentsTableViewCell", bundle: nil)
-//        tableView.register(attachedDocumentsCellNib,  forCellReuseIdentifier: "AttachedDocumentsCell")
         
         items.append("Отчет за январь 2015")
         items.append("Отчет о доходах")
@@ -43,6 +40,7 @@ class MainTableViewController: UITableViewController {
 //        items.append("Справка в бассейн")
         items.append("Крайний")
         
+        
         if let first = UIImage(named: "1") {
             testArray.append(("1", first))
         }
@@ -58,9 +56,7 @@ class MainTableViewController: UITableViewController {
         if let fifth = UIImage(named: "5") {
             testArray.append(("5", fifth))
         }
-        
-        
-        
+
         tableView.estimatedRowHeight = 300.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
@@ -79,23 +75,25 @@ class MainTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath) as! FirstTableViewCell
-        cell.configure(data: items, images: testArray, previewingDelegate: self)
+        cell.configure(with: AttachedDocumentsPresentingState.compose, data: items, images: testArray, previewingDelegate: self)
         return cell
     }
     
     @IBAction func printContentSize(_ sender: Any) {
-//        let cell = tableView.visibleCells[0] as! FirstTableViewCell
-//        print(cell.collectionView.collectionViewLayout.collectionViewContentSize)
-//        self.tableView.layoutIfNeeded()
-//        self.tableView.setNeedsDisplay()
-        
-        testArray.removeLast()
         tableView.reloadData()
+        print("Reloaded")
     }
 
 }
 
 extension MainTableViewController : ImageCollectionViewDelegate, DocumentsCollectionViewDelegate {
+    
+    internal func deleteImage(at index: Int) {
+        testArray.remove(at: index)
+        if testArray.isEmpty {
+            tableView.reloadData()
+        }
+    }
     
     func preview(image : (String, UIImage)) {
         

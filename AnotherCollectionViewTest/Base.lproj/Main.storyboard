@@ -28,7 +28,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="247"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SiP-Cz-gkX" id="QOP-nE-uPO">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="246"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="247"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6PO-cy-rlM" customClass="MainCollectionView" customModule="AnotherCollectionViewTest" customModuleProvider="target">
@@ -81,7 +81,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="gk2-X5-kb7">
-                        <barButtonItem key="rightBarButtonItem" title="Print" id="bUj-5p-zvm">
+                        <barButtonItem key="rightBarButtonItem" title="Reload" id="bUj-5p-zvm">
                             <connections>
                                 <action selector="printContentSize:" destination="xvc-uG-1mR" id="lI4-NA-95L"/>
                             </connections>

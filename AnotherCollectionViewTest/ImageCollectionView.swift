@@ -12,30 +12,42 @@ private let imageDocumentCellIdentifier = "ImageDocumentCell"
 
 protocol ImageCollectionViewDelegate : class {
     func preview(image : (String, UIImage))
+    func deleteImage(at index: Int)
 }
 
 class ImageCollectionView: UICollectionView {
 
-    var testArray = [(String, UIImage)]() {
+    fileprivate var images = [(String, UIImage)]() {
         didSet {
             reloadData()
             layoutIfNeeded()
         }
     }
+    fileprivate weak var previewingDelegate: ImageCollectionViewDelegate?
+    fileprivate var state : AttachedDocumentsPresentingState?
     
-    weak var previewingDelegate: ImageCollectionViewDelegate?
-    
+    // MARK: - Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
-        let nib = UINib(nibName: "ImageDocumentCollectionViewCell", bundle: nil)
-        self.register(nib, forCellWithReuseIdentifier: imageDocumentCellIdentifier)
-
+        
+        registerCells()
+        setup()
+    }
+    
+    private func setup() {
         collectionViewLayout = attachmentFlowLayout()
         dataSource = self
         delegate = self
-//        self.layoutIfNeeded()
     }
     
+    // MARK: - Configuration
+    internal func configure(with state: AttachedDocumentsPresentingState, images: [(String, UIImage)], delegate: ImageCollectionViewDelegate?) {
+        self.state = state
+        self.images = images
+        self.previewingDelegate = delegate
+    }
+    
+    // MARK: - Handy methods
     private func attachmentFlowLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -48,37 +60,58 @@ class ImageCollectionView: UICollectionView {
         return layout
     }
     
-    override var intrinsicContentSize: CGSize {
-        get {
-            return self.collectionViewLayout.collectionViewContentSize
-        }
+    private func registerCells() {
+        let nib = UINib(nibName: "ImageDocumentCollectionViewCell", bundle: nil)
+        self.register(nib, forCellWithReuseIdentifier: imageDocumentCellIdentifier)
     }
-    
-//    internal func configure(with images: [UIImage]) {
-//        self.images = images
-//    }
     
 }
 
-extension ImageCollectionView : UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension ImageCollectionView : UICollectionViewDataSource, UICollectionViewDelegate{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return testArray.count
+        return images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageDocumentCell", for: indexPath) as! ImageDocumentCollectionViewCell
-        let image = testArray[indexPath.row].1
-        cell.configure(with: image)
+        let image = images[indexPath.row].1
+        cell.configure(with: image, delegate: self)
         self.setNeedsLayout()
         return cell
         
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        previewingDelegate?.preview(image: testArray[indexPath.row])
-        let cell = collectionView.cellForItem(at: indexPath) as! ImageDocumentCollectionViewCell
-        cell.attemptDelete()
+        guard let state = state else { return }
+        switch state {
+        case .preview:
+            previewingDelegate?.preview(image: images[indexPath.row])
+        case .compose:
+            let cell = collectionView.cellForItem(at: indexPath) as! ImageDocumentCollectionViewCell
+            cell.attemptDelete()
+        }
     }
     
+    override var intrinsicContentSize: CGSize {
+        get {
+            return self.collectionViewLayout.collectionViewContentSize
+        }
+    }
+    
+}
+
+extension ImageCollectionView : ImageDocumentCollectionViewCellDelegate {
+    func deleteRelatedImage(sender: ImageDocumentCollectionViewCell) {
+        guard let indexPath = self.indexPath(for: sender) else { return }
+
+        self.performBatchUpdates({ [weak self] in
+            self?.images.remove(at: indexPath.row)
+            self?.deleteItems(at: [indexPath])
+        }, completion: {[weak self] (success) in
+            // ...
+        })
+
+        previewingDelegate?.deleteImage(at: indexPath.row)
+    }
 }
