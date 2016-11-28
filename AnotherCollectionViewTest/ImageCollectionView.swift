@@ -104,14 +104,10 @@ extension ImageCollectionView : UICollectionViewDataSource, UICollectionViewDele
 extension ImageCollectionView : ImageDocumentCollectionViewCellDelegate {
     func deleteRelatedImage(sender: ImageDocumentCollectionViewCell) {
         guard let indexPath = self.indexPath(for: sender) else { return }
-
         self.performBatchUpdates({ [weak self] in
             self?.images.remove(at: indexPath.row)
             self?.deleteItems(at: [indexPath])
-        }, completion: {[weak self] (success) in
-            // ...
-        })
-
+        }, completion: nil)
         previewingDelegate?.deleteImage(at: indexPath.row)
     }
 }

@@ -13,6 +13,7 @@ private let otherDocumentCellIdentifier = "TokenCollectionViewCell"
 protocol DocumentsCollectionViewDelegate : class {
     func previewDocument(item : String)
     func showDocumentAddingOptions()
+    func deleteDocument(at index: Int)
 }
 
 class MainCollectionView: UICollectionView { // rename to AttachedDocumentsCollectionView
@@ -24,7 +25,8 @@ class MainCollectionView: UICollectionView { // rename to AttachedDocumentsColle
         }
     }
     fileprivate weak var previewingDelegate: DocumentsCollectionViewDelegate?
-    private var state: AttachedDocumentsPresentingState?
+    fileprivate var state: AttachedDocumentsPresentingState?
+    
     
     // MARK: - Lifecycle
     override func awakeFromNib() {
@@ -38,6 +40,8 @@ class MainCollectionView: UICollectionView { // rename to AttachedDocumentsColle
         collectionViewLayout = attachmentFlowLayout()
         dataSource = self
         delegate = self
+        
+        self.backgroundColor = UIColor.orange
     }
     
     // MARK: - Configuration
@@ -81,8 +85,7 @@ extension MainCollectionView: UICollectionViewDataSource, UICollectionViewDelega
         if indexPath.row < documents.count {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: otherDocumentCellIdentifier, for: indexPath) as! TokenCollectionViewCell
             let documentType = indexPath.row % 2 == 0 ? SupportedFileFormat.ppt : SupportedFileFormat.doc
-            cell.configure(with: documents[indexPath.row], type: documentType)
-            cell.setup()
+            cell.configure(with: documents[indexPath.row], type: documentType, state: self.state, delegate: self)
             self.setNeedsLayout()
             return cell
         } else {
@@ -109,6 +112,21 @@ extension MainCollectionView: UICollectionViewDataSource, UICollectionViewDelega
             }
             return self.collectionViewLayout.collectionViewContentSize
         }
+    }
+}
+
+extension MainCollectionView : TokenCollectionViewCellDelegate {
+    func deleteRelatedDocument(sender: UICollectionViewCell) {
+        guard let indexPath = self.indexPath(for: sender) else { return }
+
+        self.performBatchUpdates({  [weak self] in
+            self?.documents.remove(at: indexPath.row)
+            self?.deleteItems(at: [indexPath])
+        }, completion: { [weak self] (success) in
+            self?.invalidateIntrinsicContentSize()
+            self?.previewingDelegate?.deleteDocument(at: indexPath.row)
+        })
+        
     }
 }
 

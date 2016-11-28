@@ -88,6 +88,11 @@ class MainTableViewController: UITableViewController {
 
 extension MainTableViewController : ImageCollectionViewDelegate, DocumentsCollectionViewDelegate {
     
+    internal func deleteDocument(at index: Int) {
+        items.remove(at: index)
+        tableView.reloadData()
+    }
+
     internal func deleteImage(at index: Int) {
         testArray.remove(at: index)
         if testArray.isEmpty {

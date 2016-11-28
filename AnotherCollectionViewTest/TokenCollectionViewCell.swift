@@ -8,7 +8,13 @@
 
 import UIKit
 
-@IBDesignable
+protocol TokenCollectionViewCellDelegate : class {
+    func deleteRelatedDocument(sender: UICollectionViewCell)
+}
+
+
+let kDeleteButtonWidth : CGFloat = 40.0
+
 class TokenCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var customContentView: UIView!
@@ -18,20 +24,11 @@ class TokenCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var removeButtonWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var removeButton: UIButton!
     
-    var borderLayer : CAShapeLayer?
-    let borderLineWidth : CGFloat = 1.0
+    private var borderLayer : CAShapeLayer?
+    private let borderLineWidth : CGFloat = 1.0
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        
-        
-//        let labelLeadingSpaceWidth : CGFloat = 10.0
-//        let maxAcceptableSize = UIScreen.main.bounds.width - removeButtonWidthConstraint.constant - fileExtensionView.frame.width - labelLeadingSpaceWidth - self.layoutMargins.left - self.layoutMargins.right
-//        let heightConstraint = NSLayoutConstraint(item: nameLabel, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.lessThanOrEqual, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: maxAcceptableSize)
-//        heightConstraint.priority = 1000
-//        nameLabel.addConstraint(heightConstraint)
-    }
+    private weak var delegate : TokenCollectionViewCellDelegate?
+    
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -51,21 +48,28 @@ class TokenCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    public func configure(with fileName: String, type: SupportedFileFormat) {
+    internal func configure(with fileName: String, type: SupportedFileFormat, state: AttachedDocumentsPresentingState?, delegate: TokenCollectionViewCellDelegate) {
         fileExtensionView.extensionString = type.rawValue
         if let color = type.color {
             fileExtensionView.fillColor = color
         }
-        
+        setup(with: state)
+        self.delegate = delegate
         nameLabel.text = fileName
         self.setNeedsLayout()
-//        nameLabel.sizeToFit()
     }
     
-    func setup() {
-//        removeButton.isHidden = true
-//        removeButton.isUserInteractionEnabled = false
-//        removeButtonWidthConstraint.constant /= 2
+    private func setup(with state: AttachedDocumentsPresentingState?) {
+        guard let state = state else { return }
+        removeButton.isHidden = state == .preview ? true : false
+        removeButton.isUserInteractionEnabled = state == .preview ? false : true
+        removeButtonWidthConstraint.constant = state == .preview ? kDeleteButtonWidth/2 : kDeleteButtonWidth
+    }
+    
+    @IBAction func deleteDocument(_ sender: UIButton) {
+        if let cell = sender.superview?.superview?.superview as? UICollectionViewCell {
+            delegate?.deleteRelatedDocument(sender: cell)
+        }
     }
     
     override func prepareForReuse() {
@@ -74,7 +78,6 @@ class TokenCollectionViewCell: UICollectionViewCell {
         nameLabel.text = nil
         nameLabel.layoutIfNeeded()
         fileExtensionView.cleanup()
-//        self.layoutIfNeeded()
     }
 
 }
