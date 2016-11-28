@@ -19,6 +19,7 @@ class MainCollectionView: UICollectionView, UICollectionViewDataSource, UICollec
 
     var items = [String]() {
         didSet {
+            
             reloadData()
             layoutIfNeeded()
         }
@@ -39,14 +40,16 @@ class MainCollectionView: UICollectionView, UICollectionViewDataSource, UICollec
         collectionViewLayout = attachmentFlowLayout()
         dataSource = self
         delegate = self
-//        backgroundColor = UIColor.orange
+        backgroundColor = UIColor.orange
 //        self.layoutIfNeeded()
     }
     
     private func attachmentFlowLayout() -> UICollectionViewFlowLayout {
         let layout = CustomCollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.estimatedItemSize = CGSize(width: 100.0, height: 100.0)
+        let estimatedWidth : CGFloat = 150
+        let exactHeight : CGFloat = 40.0
+        layout.estimatedItemSize = CGSize(width: estimatedWidth, height: exactHeight)
         layout.sectionInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
         layout.minimumLineSpacing = 4.0
         layout.minimumInteritemSpacing = 8.0

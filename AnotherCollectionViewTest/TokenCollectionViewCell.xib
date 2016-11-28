@@ -52,17 +52,31 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="730" id="8a2-yX-n2O"/>
                             <constraint firstItem="UH2-Qt-Wqc" firstAttribute="top" secondItem="bBz-L5-zaC" secondAttribute="top" id="AI0-zg-bPR"/>
                             <constraint firstAttribute="trailing" secondItem="Z8H-Hy-Tcr" secondAttribute="trailing" id="FDz-cc-6kw"/>
                             <constraint firstItem="KqO-p2-ZUt" firstAttribute="leading" secondItem="UH2-Qt-Wqc" secondAttribute="trailing" constant="8" id="Gia-QV-mn9"/>
                             <constraint firstItem="KqO-p2-ZUt" firstAttribute="top" secondItem="bBz-L5-zaC" secondAttribute="top" id="HNf-9X-MOL"/>
                             <constraint firstItem="Z8H-Hy-Tcr" firstAttribute="leading" secondItem="KqO-p2-ZUt" secondAttribute="trailing" id="J08-VD-nni"/>
                             <constraint firstAttribute="bottom" secondItem="UH2-Qt-Wqc" secondAttribute="bottom" id="TSa-dR-Aut"/>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="Vkh-py-GHw"/>
                             <constraint firstAttribute="bottom" secondItem="KqO-p2-ZUt" secondAttribute="bottom" id="fVh-un-HdW"/>
                             <constraint firstItem="UH2-Qt-Wqc" firstAttribute="leading" secondItem="bBz-L5-zaC" secondAttribute="leading" id="r7n-as-RtF"/>
                             <constraint firstAttribute="bottom" secondItem="Z8H-Hy-Tcr" secondAttribute="bottom" id="xrH-Lp-PUx"/>
                             <constraint firstItem="Z8H-Hy-Tcr" firstAttribute="top" secondItem="bBz-L5-zaC" secondAttribute="top" id="xtz-a6-I78"/>
                         </constraints>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="constraints">
+                                <exclude reference="8a2-yX-n2O"/>
+                                <include reference="Vkh-py-GHw"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=regular">
+                            <mask key="constraints">
+                                <include reference="8a2-yX-n2O"/>
+                                <exclude reference="Vkh-py-GHw"/>
+                            </mask>
+                        </variation>
                     </view>
                 </subviews>
             </view>
@@ -80,7 +94,7 @@
                 <outlet property="removeButton" destination="Z8H-Hy-Tcr" id="rVY-2t-7Xw"/>
                 <outlet property="removeButtonWidthConstraint" destination="a6b-IQ-7AN" id="cRq-SS-9hN"/>
             </connections>
-            <point key="canvasLocation" x="-363" y="-431"/>
+            <point key="canvasLocation" x="-551" y="-544"/>
         </collectionViewCell>
     </objects>
     <resources>

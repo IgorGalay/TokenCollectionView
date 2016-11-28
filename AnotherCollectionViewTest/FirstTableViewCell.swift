@@ -44,6 +44,8 @@ class FirstTableViewCell: UITableViewCell {
 //        self.layoutIfNeeded()
     }
     
-    
+    override func prepareForReuse() {
+        self.layoutIfNeeded()
+    }
 
 }
