@@ -57,7 +57,7 @@ class MainTableViewController: UITableViewController {
             testArray.append(("5", fifth))
         }
 
-        tableView.estimatedRowHeight = 300.0
+        tableView.estimatedRowHeight = 500.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
         quickLookController.dataSource = self
@@ -98,6 +98,10 @@ extension MainTableViewController : ImageCollectionViewDelegate, DocumentsCollec
         if testArray.isEmpty {
             tableView.reloadData()
         }
+    }
+    
+    func update() {
+        tableView.reloadData()
     }
     
     func preview(image : (String, UIImage)) {
@@ -213,8 +217,20 @@ extension MainTableViewController : UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
         let filename = url.deletingPathExtension().lastPathComponent
         let pathExtension = url.pathExtension
-        print(filename)
-        print(pathExtension)
+        items.append(filename + pathExtension)
+        
+        let cell = tableView.visibleCells[0] as! FirstTableViewCell
+        cell.collectionView.invalidateIntrinsicContentSize()
+        cell.collectionView.layoutIfNeeded()
+        cell.layoutIfNeeded()
+        
+        tableView.invalidateIntrinsicContentSize()
+        tableView.layoutSubviews()
+        tableView.setNeedsUpdateConstraints()
+        tableView.layoutIfNeeded()
+        tableView.reloadData()
+        tableView.setNeedsDisplay()
+        
     }
     
 }

@@ -14,6 +14,7 @@ protocol DocumentsCollectionViewDelegate : class {
     func previewDocument(item : String)
     func showDocumentAddingOptions()
     func deleteDocument(at index: Int)
+    func update()
 }
 
 class MainCollectionView: UICollectionView { // rename to AttachedDocumentsCollectionView
@@ -21,6 +22,7 @@ class MainCollectionView: UICollectionView { // rename to AttachedDocumentsColle
     fileprivate var documents = [String]() {
         didSet {
             reloadData()
+            invalidateIntrinsicContentSize()
             layoutIfNeeded()
         }
     }
@@ -49,6 +51,18 @@ class MainCollectionView: UICollectionView { // rename to AttachedDocumentsColle
         self.state = state
         self.documents = documents
         self.previewingDelegate = delegate
+    }
+    
+    internal func append(document : String) {
+        let newIndexPath = IndexPath(item: documents.count , section: 0)
+        self.performBatchUpdates({  [weak self] in
+            self?.documents.append(document)
+            self?.insertItems(at: [newIndexPath])
+            }, completion: { [weak self] (success) in
+                self?.invalidateIntrinsicContentSize()
+                self?.previewingDelegate?.update()
+        })
+        documents.append(document)
     }
     
     // MARK: - Handy methods
@@ -132,6 +146,7 @@ extension MainCollectionView : TokenCollectionViewCellDelegate {
 
 extension MainCollectionView : DocumentAdditionDelegate {
     internal func showDocumentAddingOptions() {
+        self.invalidateIntrinsicContentSize()
         previewingDelegate?.showDocumentAddingOptions()
     }
 }
