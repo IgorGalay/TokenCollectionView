@@ -1,0 +1,12 @@
+PODS:
+  - DownloadButton (0.1.0)
+
+DEPENDENCIES:
+  - DownloadButton
+
+SPEC CHECKSUMS:
+  DownloadButton: 49a21a89e0d7d1b42d9134f79aaa40e727cd57c3
+
+PODFILE CHECKSUM: a7391c490557bc31ee0ca855c7ad18e91c0cb7df
+
+COCOAPODS: 1.1.1

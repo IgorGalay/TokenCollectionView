@@ -79,5 +79,10 @@ class TokenCollectionViewCell: UICollectionViewCell {
         nameLabel.layoutIfNeeded()
         fileExtensionView.cleanup()
     }
+    
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        let attributes = super.preferredLayoutAttributesFitting(layoutAttributes)
+        return attributes
+    }
 
 }

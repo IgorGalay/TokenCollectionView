@@ -119,12 +119,7 @@ extension MainCollectionView: UICollectionViewDataSource, UICollectionViewDelega
     
     override var intrinsicContentSize: CGSize {
         get {
-            // FIXME: Crutch
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                let contentSize = self.collectionViewLayout.collectionViewContentSize
-                return CGSize(width: contentSize.width/2.0, height: contentSize.height/2.0)
-            }
-            return self.collectionViewLayout.collectionViewContentSize
+            return self.contentSize
         }
     }
 }
